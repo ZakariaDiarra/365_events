@@ -1,26 +1,51 @@
+
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <SiteHeader />
+  <router-view />
+  <SiteFooter />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SiteHeader from './components/SiteHeader.vue';
+import SiteFooter from './components/SiteFooter.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    SiteHeader,
+    SiteFooter
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+/* Vos styles globaux ici */
+body {
+  font-family: 'Open Sans', sans-serif;
 }
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px; /* Espace entre les éléments de la grille */
+  padding: 20px;
+}
+
+.event {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center; /* Centrer le texte */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+}
+
+.event-image {
+  width: 100%; /* Utilisez la pleine largeur du conteneur de l'événement */
+  height: 600px; /* Hauteur fixe pour toutes les images */
+  object-fit: cover; /* S'assure que l'image couvre tout l'espace sans déformation */
+  object-position: center; /* Centre l'image dans le cadre */
+}
+
+
 </style>

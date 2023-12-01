@@ -16,12 +16,12 @@
   <style scoped>
   footer {
     text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
     background-color: #f0f0f0;
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
+    font-size: 13px;
   }
   </style>

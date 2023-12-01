@@ -1,5 +1,15 @@
 
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+.event-image {
+    height: 600px;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+

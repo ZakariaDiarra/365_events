@@ -4,7 +4,7 @@
 <template>
   <nav class="header-nav">
     <router-link to="/">
-      <img src="@/assets/logo.png" alt="Logo" class="logo" />
+      <img src="@/assets/logo365.png" alt="Logo" class="logo" />
     </router-link>
     <ul class="nav-links">
       <li><router-link to="/" class="hover:text-gray-300">Accueil</router-link></li>
@@ -45,7 +45,7 @@
 }
 
 .logo {
-  width: 80px;
+  width: 90px;
   height: auto;
 }
 
@@ -58,11 +58,14 @@
 
 .nav-links a {
   text-decoration: none;
-  color: black;
+  color: #144450
+}
+.nav-links a:hover {
+  color: #000000;
 }
 
 .login-button {
-  background-color: #0590a8;
+  background-color: #a0c1c9;
   color: white;
   padding: 5px 15px;
   border-radius: 5px;
@@ -70,7 +73,7 @@
 }
 
 .login-button:hover {
-  background-color: #024855;
+  background-color: #17917c;
   color: antiquewhite;
 }
 

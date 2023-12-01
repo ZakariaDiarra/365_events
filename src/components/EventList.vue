@@ -1,14 +1,16 @@
 
 
 <template>
-    <div class="events">
-      <div v-for="event in events" :key="event.id" class="event">
-        <img :src="event.imageUrl" alt="Image de l'événement" class="event-image" />
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.description }}</p>
-        <p>{{ event.date }}</p>
-        <p>{{ event.location }}</p>
-        <router-link :to="'/events/' + event.id" class="details-button">Détails</router-link>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-5">
+      <div v-for="event in events" :key="event.id" class="border border-gray-300 rounded overflow-hidden text-center shadow-md mb-10">
+        <img :src="event.imageUrl" alt="Image de l'événement" class="w-full event-image object-cover object-center"/>
+        <div class="p-4">
+          <h2 class="text-xl font-semibold">{{ event.title }}</h2>
+          <p class="text-gray-600">{{ event.description }}</p>
+          <h3 class="text-dark font-semibold">{{ event.date }}</h3>
+          <p class="text-gray-500">{{ event.location }}</p>
+          <router-link :to="'/events/' + event.id" class="mt-4 inline-block bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-800 transition duration-300">Détails</router-link>
+        </div>
       </div>
     </div>
 </template>
@@ -27,33 +29,5 @@ export default {
 </script>
 
 <style>
-.events {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
 
-.event {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.event-image {
-  width: 100%;
-  height: 600px;
-  object-fit: cover;
-}
-
-.details-button {
-  background-color: #0590a8;
-  color: white;
-  padding: 5px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.details-button:hover {
-  background-color: #024855;
-}
 </style>

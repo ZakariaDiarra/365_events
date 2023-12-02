@@ -9,7 +9,6 @@
   <script>
   export default {
     name: "SiteFooter",
-    // Autres options si nécessaire
   }
   </script>
 
@@ -17,10 +16,11 @@
   footer {
     text-align: center;
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: rgb(166, 238, 202);
     position: fixed;
     left: 0;
     bottom: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 100%;
     font-size: 13px;
   }

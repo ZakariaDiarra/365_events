@@ -38,9 +38,10 @@ const routes = [
         component: UserDashboard
     },
     {
-        path: '/paymentpage',
+        path: '/payment/:eventId',
         name: 'PaymentPage',
-        component: PaymentPage
+        component: PaymentPage,
+        props: true
     },
     {
         path: '/userlogin',

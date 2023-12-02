@@ -2,9 +2,9 @@
 
 <template>
     <div @click="handleClick" class="cursor-pointer hover:bg-emerald-100 transition duration-300 ease-in-out">
-      <img :src="category.imageUrl" alt="Image de la catégorie" class="w-full h-48 object-cover rounded-t-lg" />
+      <img :src="category.imageUrl" alt="Image de la catégorie" class="w-full h-64 object-cover rounded-t-lg" />
       <div class="p-4">
-        <h3 class="text-lg">{{ category.name }}</h3>
+        <h3 class="text-lg font-bold">{{ category.name }}</h3>
       </div>
     </div>
 </template>

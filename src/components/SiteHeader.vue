@@ -2,12 +2,12 @@
 
 <template>
   <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-auto">
+    <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between">
         <div class="flex space-x-4">
           <!-- logo -->
           <router-link to="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
-            <img src="@/assets/logo365.png" alt="Logo" class="h-14 w-14 mr-2"/>
+            <img src="@/assets/logo365.png" alt="Logo" class="h-24 w-24 mr-2"/>
           </router-link>
         </div>
         <!-- primary nav -->
@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import { store } from '@/components/Store';
-
 export default {
   data() {
     return {
@@ -51,19 +49,19 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return store.user !== null;
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
     logout() {
-      store.logout();
+      this.$store.dispatch('logoutUser');
       this.$router.push('/');
     },
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
     closeMenu() {
-    this.isOpen = false;
+      this.isOpen = false;
     },
     logoutAndCloseMenu() {
       this.logout();
@@ -72,7 +70,6 @@ export default {
   },
 };
 </script>
-
 <style>
 
 </style>

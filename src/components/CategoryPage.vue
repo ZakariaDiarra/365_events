@@ -18,23 +18,32 @@
 
 
 <script>
-import { events as eventsData } from '@/data/events.js';
+import axios from 'axios';
 
 export default {
-    name: "CategoryPage",
-    props: {
+  name: "CategoryPage",
+  props: {
     categoryName: String
-    },
-    data() {
+  },
+  data() {
     return {
-        eventsData,
+      events: [],
     };
-    },
-    computed: {
+  },
+  created() {
+    axios.get(`http://127.0.0.1:8000/api/events?category=${this.categoryName}`)
+    .then(response => {
+        this.events = response.data;
+    })
+    .catch(error => {
+        console.error("Erreur lors de la récupération des événements:", error);
+    });
+  },
+  computed: {
     filteredEvents() {
-        return this.eventsData.filter(event => event.category === this.categoryName);
+      return this.events;
     }
-    }
+  }
 };
 </script>
 

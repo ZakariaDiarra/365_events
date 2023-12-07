@@ -16,6 +16,7 @@ import UserRegister from '../components/UserRegister.vue'
 
 
 
+
 const routes = [
     {
         path: '/',
@@ -58,9 +59,8 @@ const routes = [
         name: 'CategoryPage',
         component: CategoryPage,
         props: true
-    }
-];
-
+    },
+]
 
 const router = createRouter({
     history: createWebHistory(),

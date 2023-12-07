@@ -23,6 +23,9 @@
           Connexion
         </button>
       </div>
+      <div v-if="loginError" class="text-emerald-800 mt-2">
+        {{ loginErrorMessage }}
+      </div>
     </form>
     <div class="text-center mt-10">
       <router-link to="/userregister" class="text-black-500 hover:text-emerald-800">Pas encore inscrit ? Créer un compte.</router-link>
@@ -31,20 +34,18 @@
 </template>
 
 
-
 <script>
-import { store } from '@/components/Store.js';
+import axios from 'axios';
+import { useVuelidate } from '@vuelidate/core';
+import { required, minLength } from '@vuelidate/validators';
 
-import { required, minLength } from '@vuelidate/validators'
-import { useVuelidate } from '@vuelidate/core'
-
-
-  export default {
+export default {
   data() {
     return {
       username: '',
       password: '',
-      errors: [],
+      loginError: false,
+      loginErrorMessage: ''
     };
   },
   validations() {
@@ -53,35 +54,43 @@ import { useVuelidate } from '@vuelidate/core'
       password: { required, minLength: minLength(6) }
     }
   },
-  setup() {
-    return { v$: useVuelidate() }
-  },
   methods: {
     validateForm() {
-      this.errors = [];
-
-      if (!this.username) {
-        this.errors.push("Nom d'utilisateur requis.");
-      }
-      if (!this.password) {
-        this.errors.push("Mot de passe requis.");
-      }
-      return this.errors.length === 0;
+      this.loginError = false;
+      this.loginErrorMessage = '';
+      return this.v$.$validate();
     },
-    submitForm() {
-      this.v$.$validate()
-      if (!this.v$.$invalid) {
-        // Simuler la connexion
-        const userData = { username: this.username };
-        store.setUser(userData);
-        // Après une connexion réussie :
-        this.$router.push('/userdashboard'); // Redirige vers le tableau de bord
+    async submitForm() {
+      if (await this.validateForm()) {
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', {
+            username: this.username,
+            password: this.password
+          });
+          const token = response.data.access;
+          localStorage.setItem('authToken', token);
+
+          const userDetailsResponse = await axios.get('http://127.0.0.1:8000/api/user_details', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+
+          localStorage.setItem('userId', userDetailsResponse.data.id);
+          this.$store.dispatch('loginUser', { username: this.username });
+
+          this.$router.push('/userdashboard');
+        } catch (error) {
+          this.loginError = true;
+          this.loginErrorMessage = error.response ? error.response.data.detail : 'Erreur de connexion au serveur';
+      }
       }
     }
+  },
+  setup() {
+    return { v$: useVuelidate() };
   }
 };
 </script>
 
-  <style scoped>
+<style scoped>
 
-  </style>
+</style>

@@ -1,5 +1,23 @@
 
 
+export const categories = [
+    {
+      name: "Concerts",
+      imageUrl: require("@/assets/concert1.jpg")
+    },
+    {
+      name: "Spectacles",
+      imageUrl: require("@/assets/standup1.jpg")
+    },
+    {
+      name: "Expositions",
+      imageUrl: require("@/assets/expo1.jpg")
+    },
+    {
+      name: "Conférences",
+      imageUrl: require("@/assets/conf1.jpg")
+    },
+  ];
 
 export const events = [
     {
@@ -13,7 +31,7 @@ export const events = [
     },
     {
       id: 2,
-      title: "Exposition Photo",
+      title: "Noir et Blanc",
       category: "Expositions",
       description: "Une exposition unique de photos magnifiques par des artistes modernes...",
       date: "01-02-2024",
@@ -58,7 +76,7 @@ export const events = [
     },
     {
       id: 7,
-      title: "Molière en fête",
+      title: "Mon lit hier",
       category: "Spectacles",
       description: "Une soirée théatre inoubliable avec une pièce légendaire du grand Molière...",
       date: "02-11-2024",
@@ -110,5 +128,4 @@ export const events = [
       location: "Grenoble, France",
       imageUrl: require("@/assets/standup4.jpg")
     },
-    // Autres événements ici
   ];

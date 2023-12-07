@@ -19,16 +19,17 @@
       </div>
       <button type="submit" class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded">Réserver</button>
     </form>
+    <h3 class="mt-40 text-center">Connectez-vous pour pouvoir réserver !</h3>
   </div>
 </template>
 
 <script>
-import { events } from '@/data/events.js';
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      eventDetails: {},
+      eventDetails: null,
       reservation: {
         name: '',
         email: '',
@@ -37,20 +38,49 @@ export default {
     };
   },
   props: {
-  eventId: {
+    eventId: {
       type: Number,
       required: true
     }
   },
   created() {
-    const eventIdAsNumber = Number(this.eventId);
-    this.eventDetails = events.find(event => event.id === eventIdAsNumber);
+    this.fetchEventDetails();
   },
   methods: {
-    submitReservation() {
-      // Traitement de la réservation
-      alert(`Réservation pour ${this.reservation.tickets} billet(s) effectuée !`);
+    fetchEventDetails() {
+      axios.get(`http://127.0.0.1:8000/api/events/${this.eventId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      })
+      .then(response => {
+        this.eventDetails = response.data;
+      })
+      .catch(error => {
+        console.error("Erreur lors de la récupération des détails de l'événement:", error);
+      });
     },
-  },
+    submitReservation() {
+      const userId = localStorage.getItem('userId');
+      axios.post('http://127.0.0.1:8000/api/reservations/', {
+        user: userId,
+        event: this.eventId,
+        name: this.reservation.name,
+        email: this.reservation.email,
+        tickets: this.reservation.tickets
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      })
+      .then(() => {
+        alert(`Réservation pour ${this.reservation.tickets} billet(s) effectuée !`);
+        this.$router.push('/userdashboard');
+      })
+      .catch(error => {
+        console.error("Erreur lors de la création de la réservation:", error);
+      });
+    },
+  }
 };
 </script>

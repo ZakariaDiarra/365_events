@@ -7,6 +7,7 @@
     <div class="relative text-center overflow-hidden">
       <img src="@/assets/banner2.jpg" alt="Bannière" class="w-full h-96 object-cover text-center"/>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
+        <h1 class="text-3xl text-emerald-400 font-bold mb-4">365 jours</h1>
         <h1 class="text-3xl font-bold mb-8">{{ currentTitle }}<span class="cursor">|</span></h1>
         <router-link to="/events" class="bg-emerald-500 hover:bg-emerald-700 text-black font-bold py-3 px-6 rounded transition duration-300">Explorer</router-link>
       </div>
@@ -18,12 +19,11 @@
     </div>
 
 
-
     <!-- About Us Section -->
     <section class="py-12 bg-emerald-100">
       <div class="container mx-auto px-6 flex flex-wrap items-center">
         <div class="w-full md:w-1/2 px-8">
-          <h2 class="text-3xl font-semibold mb-4 text-emerald-800">À propos de nous</h2>
+          <h2 class="text-3xl font-semibold mb-4 text-emerald-800">À propos</h2>
           <p class="text-lg leading-relaxed text-gray-700">Notre mission est de vous fournir les meilleurs événements tout au long de l'année. Concerts, Spectacles, Conférences et Expositions, tout le monde peut trouver son bonheur d'activité sur notre plateforme 365 jours par an...</p>
         </div>
       <div class="w-full md:w-1/2 mt-8 md:mt-0 px-6">
@@ -61,7 +61,7 @@
             <p class="text-gray-600">{{ event.description }}</p>
             <h3 class="text-dark font-semibold">{{ event.date }}</h3>
             <p class="text-gray-500">{{ event.location }}</p>
-            <router-link :to="`/events/${event.id}`" class="mt-4 inline-block bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-800 transition duration-300">Détails</router-link>
+            <router-link :to="`/events/${event.id}`" class="mt-4 inline-block bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-800 transition duration-300">Voir</router-link>
           </div>
         </div>
       </div>
@@ -97,19 +97,10 @@
 
 
 <script>
-
-import { events } from '@/data/events.js'
-
 import CategoryItem from './CategoryItem.vue';
-
-import concertImage from '@/assets/concert1.jpg';
-import expoImage from '@/assets/expo1.jpg';
-import standupImage from '@/assets/standup5.jpg';
-import confImage from '@/assets/conf1.jpg';
-
+import { events as eventsData, categories as categoriesData} from '@/data/events.js';
 
 export default {
-  // Logique de composant ici...
   name: "HomePage",
   components: {
     CategoryItem
@@ -119,13 +110,12 @@ export default {
       searchLocation: '',
       searchDate: '',
       searchCategory: '',
-      categories: [
-        { name: "Concerts", imageUrl: concertImage },
-        { name: "Expositions", imageUrl: expoImage },
-        { name: "Spectacles", imageUrl: standupImage },
-        { name: "Conférences", imageUrl: confImage },
-        // autres catégories...
-      ],
+      categories: categoriesData,
+      events: eventsData,
+      currentTitle: "",
+      titles: ["de Concerts", "de Spectacles", "de Conférences", "d'Expositions"],
+      titleIndex: 0,
+      letterIndex: 0,
       galleryImages: [
         { id: 1, src: require('@/assets/concert3.jpg') },
         { id: 2, src: require('@/assets/standup2.jpg') },
@@ -133,13 +123,7 @@ export default {
         { id: 4, src: require('@/assets/standup4.jpg') },
       ],
       isModalOpen: false,
-      selectedImage: null,
-      events,
-
-      currentTitle: "",
-      titles: ["Vivez des expériences uniques", "Explorez de nouveaux horizons", "365 jours d'événements"],
-      titleIndex: 0,
-      letterIndex: 0
+      selectedImage: null
     };
   },
   methods: {
@@ -147,15 +131,15 @@ export default {
       this.$router.push({ name: 'CategoryPage', params: { categoryName } });
     },
     subscribeNewsletter() {
-    // Logique pour simuler l'inscription à la newsletter
-    alert("Merci de vous être inscrit à notre newsletter !");
+      // Simulation
+      alert("Merci de vous être inscrit à notre newsletter !");
     },
     openModal(image) {
-    this.selectedImage = image;
-    this.isModalOpen = true;
+      this.selectedImage = image;
+      this.isModalOpen = true;
     },
     closeModal() {
-    this.isModalOpen = false;
+      this.isModalOpen = false;
     },
     typeWriter() {
       if (this.letterIndex < this.titles[this.titleIndex].length) {
@@ -166,9 +150,9 @@ export default {
           this.letterIndex = 0;
           this.titleIndex = (this.titleIndex + 1) % this.titles.length;
           this.typeWriter();
-        }, 3000); // Délai entre les titres
+        }, 2000);
       }
-    }
+    },
   },
   mounted() {
     this.typeWriter();
@@ -182,13 +166,13 @@ export default {
       });
     }
   }
-  };
+};
 </script>
 
 <style>
 .cursor {
   animation: blink 1s step-end infinite;
-  color: rgb(5, 151, 102);
+  color: rgb(230, 255, 247);
 }
 
 @keyframes blink {
